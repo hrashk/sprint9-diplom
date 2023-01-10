@@ -10,7 +10,7 @@
 * Interface Segregation Principle (ISP)
 * Dependency Inversion Principle  (DIP)
 
-## Шаблоны проектирования (Design Patterns) - избегайте if/switch в коде, а в тестах ещё и for/while
+## Шаблоны проектирования (Design Patterns) - избегайте|изолируйте if и switch в коде, а в тестах ещё и for/while
 * Strategy
 * Factory
 * ...

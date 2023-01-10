@@ -22,8 +22,9 @@
   * GitHub Actions
   * Jenkins (найти хостинг) 
 * Docker
-  * JUnit
+  * JUnit: eclipse-temurin
   * RestAssured
-  * [Selenium](https://github.com/SeleniumHQ/docker-selenium)
+  * [Selenium Grid](https://github.com/SeleniumHQ/docker-selenium)
+  * Selenoid
 * (желательно) Selenide
 * (желательно) JUnit 5
