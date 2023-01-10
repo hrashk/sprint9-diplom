@@ -28,3 +28,5 @@
   * Selenoid
 * (желательно) Selenide
 * (желательно) JUnit 5
+
+https://gist.github.com/hrashk/15fae8919686f414972adfde50b5b670
