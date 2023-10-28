@@ -22,6 +22,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import static io.restassured.RestAssured.given;
+
 public class SystemTest {
 
     private WebDriver driver;
@@ -76,6 +78,19 @@ public class SystemTest {
         LocalStorage localStorage = ((WebStorage) driver).getLocalStorage();
         String accessToken = localStorage.getItem("accessToken");
         System.out.println(accessToken);
+    }
+
+    @Test
+    public void deleteStellarUser() {
+        given().log().all()
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2NjYWVjOWVkMjgwMDAxYjM3NjJhYiIsImlhdCI6MTY5ODQ4MjkyNiwiZXhwIjoxNjk4NDg0MTI2fQ.G4JV91gowD_V6lZY7fDH7FB8Q6RcHvR6dOT0M6hKFQA")
+                .baseUri("https://stellarburgers.nomoreparties.site")
+                .when()
+                .delete("/api/auth/user")
+                .then().log().all()
+                .assertThat()
+                .statusCode(202);
     }
 
     @Test
