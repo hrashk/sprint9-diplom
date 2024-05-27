@@ -1,21 +1,17 @@
 package praktikum;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v113.network.Network;
+import org.openqa.selenium.devtools.v122.network.Network;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
@@ -23,32 +19,19 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class SystemTest {
-
-    private WebDriver driver;
-
-    @Before
-    public void setUpChrome() {
-        System.setProperty("webdriver.http.factory", "jdk-http-client");
-        ChromeDriverService service = new ChromeDriverService.Builder()
-                .usingDriverExecutable(new File("/opt/chromedriver/chromedriver"))
-                .build();
-
-        ChromeOptions options = new ChromeOptions()
-                .setBinary("/opt/chrome-for-testing/chrome");
-
-        driver = new ChromeDriver(service, options);
-    }
-
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
+    @Rule
+    public DriverRule driverRule = new DriverRule();
 
     @Test
     public void switchTabs() {
-        driver.get("https://stellarburgers.nomoreparties.site/login");
+        WebDriver driver = driverRule.getDriver();
+        logIn(driver);
 
         var ingredientTab = By.cssSelector(".tab_tab__1SPyG:nth-child(3)");
+
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(ingredientTab));
+
         driver.findElement(ingredientTab).click();
 
 
@@ -63,11 +46,8 @@ public class SystemTest {
 
     @Test
     public void fetchAuthTokenFromLocalStorage() {
-        driver.get("https://stellarburgers.nomoreparties.site/login");
-
-        driver.findElement(By.cssSelector("input[name='name']")).sendKeys("uasya@pupkin.dev");
-        driver.findElement(By.cssSelector("input[name='Пароль']")).sendKeys("pupkin");
-        driver.findElement(By.cssSelector("form button")).click();
+        WebDriver driver = driverRule.getDriver();
+        logIn(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.numberOfElementsToBeMoreThan(
@@ -78,8 +58,21 @@ public class SystemTest {
         System.out.println(accessToken);
     }
 
+    private static void logIn(WebDriver driver) {
+        driver.get("https://stellarburgers.nomoreparties.site/login");
+
+        By loginButton = By.cssSelector("form button");
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(loginButton));
+
+        driver.findElement(By.cssSelector("input[name='name']")).sendKeys("uasya@pupkin.dev");
+        driver.findElement(By.cssSelector("input[name='Пароль']")).sendKeys("pupkin");
+        driver.findElement(loginButton).click();
+    }
+
     @Test
     public void captureRequest() throws InterruptedException {
+        WebDriver driver = driverRule.getDriver();
         driver.get("https://stellarburgers.nomoreparties.site/login");
 
         DevTools devTools = ((ChromeDriver) driver).getDevTools();
