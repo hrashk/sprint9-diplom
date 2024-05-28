@@ -21,9 +21,10 @@
 
 ## Портфолио++
 * Инфраструктура/DevOps: прикрутить CI/CD
+  * GitHub Actions
+  * 
   * GitLab
   * GitHub + CircleCI/TravisCI/...
-  * GitHub Actions
   * Jenkins (найти хостинг) 
 * Docker
   * JUnit: eclipse-temurin

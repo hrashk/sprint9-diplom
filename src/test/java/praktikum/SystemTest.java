@@ -38,8 +38,8 @@ public class SystemTest {
                 .until(ExpectedConditions.attributeContains(ingredientTab, "class", "current"));
 
 //        new WebDriverWait(driver, Duration.ofSeconds(10))
-//                .until(driver -> {
-//                    return driver.findElement(By.xpath("")).getRect().x < 300;
+//                .until(d -> {
+//                    return d.findElement(By.xpath("...")).getRect().x < 300;
 //                });
     }
 
