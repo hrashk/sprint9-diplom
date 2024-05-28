@@ -34,9 +34,8 @@ public class SystemTest {
 
         driver.findElement(ingredientTab).click();
 
-
         new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.attributeContains(By.xpath("..."), "class", "current"));
+                .until(ExpectedConditions.attributeContains(ingredientTab, "class", "current"));
 
 //        new WebDriverWait(driver, Duration.ofSeconds(10))
 //                .until(driver -> {
