@@ -1,5 +1,6 @@
 package praktikum;
 
+import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class ApiTest {
     @Test
     public void deleteStellarUser() {
         given().log().all()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer ...")
                 .baseUri("https://stellarburgers.nomoreparties.site")
                 .when()
@@ -29,7 +30,7 @@ public class ApiTest {
         dto.add("61c0c5a71d1f82001bdaaa72");
 
         given().log().all()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .header("Authorization", "Bearer ...")
                 .baseUri("https://stellarburgers.nomoreparties.site")
                 .body(dto)
