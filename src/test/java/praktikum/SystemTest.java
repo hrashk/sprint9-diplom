@@ -32,6 +32,12 @@ public class SystemTest {
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(ingredientTab));
 
+        // https://github.com/awaitility/awaitility/wiki/Usage
+//        Awaitility.await()
+//                .atMost(30, TimeUnit.SECONDS)
+//                .pollInterval(500, TimeUnit.MILLISECONDS)
+//                .until(() -> click());
+
         driver.findElement(ingredientTab).click();
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
