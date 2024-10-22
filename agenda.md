@@ -21,7 +21,7 @@
 
 ## Портфолио++
 * Инфраструктура/DevOps: прикрутить CI/CD
-  * GitHub Actions
+  * GitHub Actions: https://testautomationu.applitools.com/github-actions-for-testing/
   * 
   * GitLab
   * GitHub + CircleCI/TravisCI/...
@@ -33,5 +33,3 @@
   * Selenoid
 * (желательно) Selenide
 * (желательно) JUnit 5
-
-https://gist.github.com/hrashk/15fae8919686f414972adfde50b5b670
