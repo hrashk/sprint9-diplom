@@ -30,6 +30,9 @@ public class DriverRule extends ExternalResource {
         else {
             initChrome();
         }
+
+        // Selenide
+//        WebDriverRunner.setWebDriver(driver);
     }
 
     private void initFirefox() {
