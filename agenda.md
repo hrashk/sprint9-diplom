@@ -13,7 +13,7 @@
 * получение токена авторизации из Local Storage браузера после логина
 * удаление юзера через rest assured: передать токен в header'е
 * юзера следует удалять даже в негативных кейсах, т.к. система может создавать невалидных юзеров из-за бага
-* в коде использовать фабрику или @Rule / JUnit 5 : @ExtendsWith
+* в коде использовать фабрику или @Rule (JUnit4) / @RegisterExtension (JUnit5)
 * mvn clean test -Dbrowser=yandex
   * для яндекс браузера искать подходящую версию драйвера через REST API:
     https://github.com/GoogleChromeLabs/chrome-for-testing#json-api-endpoints
