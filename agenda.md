@@ -29,7 +29,6 @@
 * Docker
   * JUnit: eclipse-temurin
   * RestAssured
-  * [Selenium Grid](https://github.com/SeleniumHQ/docker-selenium)
-  * Selenoid
+  * [Selenium Grid](https://www.selenium.dev/documentation/grid/)
+  * Moon / Selenoid : https://aerokube.com/moon/latest/
 * (желательно) Selenide
-* (желательно) JUnit 5
