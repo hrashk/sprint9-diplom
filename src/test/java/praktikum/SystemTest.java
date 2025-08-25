@@ -1,12 +1,12 @@
 package praktikum;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v122.network.Network;
+import org.openqa.selenium.devtools.v138.network.Network;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,12 +19,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class SystemTest {
-    @Rule
-    public DriverRule driverRule = new DriverRule();
+    @RegisterExtension
+    private DriverExtension ext = new DriverExtension();
 
     @Test
     public void switchTabs() {
-        WebDriver driver = driverRule.getDriver();
+        WebDriver driver = ext.getDriver();
         logIn(driver);
 
         var ingredientTab = By.cssSelector(".tab_tab__1SPyG:nth-child(3)");
@@ -51,7 +51,7 @@ public class SystemTest {
 
     @Test
     public void fetchAuthTokenFromLocalStorage() {
-        WebDriver driver = driverRule.getDriver();
+        WebDriver driver = ext.getDriver();
         logIn(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -77,12 +77,16 @@ public class SystemTest {
 
     @Test
     public void captureRequest() throws InterruptedException {
-        WebDriver driver = driverRule.getDriver();
+        WebDriver driver = ext.getDriver();
         driver.get("https://stellarburgers.nomoreparties.site/login");
 
         DevTools devTools = ((ChromeDriver) driver).getDevTools();
         devTools.createSession();
-        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+        devTools.send(Network.enable(
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty()));
 
         BlockingQueue<String> q = new LinkedBlockingQueue<>();
 

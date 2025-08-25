@@ -1,50 +1,39 @@
 package praktikum;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.rules.ExternalResource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class DriverRule extends ExternalResource {
+public class DriverFactory {
     private WebDriver driver;
-
-    @Override
-    protected void before() throws Throwable {
-        initDriver();
-    }
-
-    @Override
-    protected void after() {
-        driver.quit();
-    }
 
     public void initDriver() {
         if ("firefox".equals(System.getProperty("browser"))) {
-            initFirefox();
+            setupFirefox();
         } else if ("yandex".equals(System.getProperty("browser"))) {
             initYandex();
-        }
-        else {
-            initChrome();
+        } else {
+            setupChrome();
         }
 
         // Selenide
 //        WebDriverRunner.setWebDriver(driver);
     }
 
-    private void initFirefox() {
-        WebDriverManager.firefoxdriver().setup();
-        var opts = new FirefoxOptions()
-                .configureFromEnv();
-        driver = new FirefoxDriver(opts);
-    }
-
-    private void initChrome() {
+    public void setupChrome() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+
+    }
+
+    public void setupFirefox() {
+        WebDriverManager.firefoxdriver().setup();
+        var opts = new FirefoxOptions().setBinary("/usr/bin/firefox");
+
+        driver = new FirefoxDriver(opts);
     }
 
     private void initYandex() {
