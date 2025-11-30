@@ -6,9 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.v138.network.Network;
-import org.openqa.selenium.html5.LocalStorage;
-import org.openqa.selenium.html5.WebStorage;
+import org.openqa.selenium.devtools.v142.network.Network;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -51,20 +50,20 @@ public class SystemTest {
 
     @Test
     public void fetchAuthTokenFromLocalStorage() {
-        WebDriver driver = ext.getDriver();
+        RemoteWebDriver driver = ext.getDriver();
         logIn(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.numberOfElementsToBeMoreThan(
                         By.cssSelector("a[class^='BurgerIngredient']"), 2));
 
-        LocalStorage localStorage = ((WebStorage) driver).getLocalStorage();
-        String accessToken = localStorage.getItem("accessToken");
+        String accessToken = (String) driver.executeScript(
+                "return localStorage.getItem(arguments[0]);", "accessToken");
         System.out.println(accessToken);
     }
 
     private static void logIn(WebDriver driver) {
-        driver.get("https://stellarburgers.nomoreparties.site/login");
+        driver.get("https://stellarburgers.education-services.ru/login");
 
         By loginButton = By.cssSelector("form button");
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -78,11 +77,12 @@ public class SystemTest {
     @Test
     public void captureRequest() throws InterruptedException {
         WebDriver driver = ext.getDriver();
-        driver.get("https://stellarburgers.nomoreparties.site/login");
+        driver.get("https://stellarburgers.education-services.ru/login");
 
         DevTools devTools = ((ChromeDriver) driver).getDevTools();
         devTools.createSession();
         devTools.send(Network.enable(
+                Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
                 Optional.empty(),
