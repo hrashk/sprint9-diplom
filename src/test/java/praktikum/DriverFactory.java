@@ -1,14 +1,14 @@
 package praktikum;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class DriverFactory {
-    private WebDriver driver;
+    private RemoteWebDriver driver;
 
     public void initDriver() {
         if ("firefox".equals(System.getProperty("browser"))) {
@@ -45,7 +45,7 @@ public class DriverFactory {
         driver = new ChromeDriver(options);
     }
 
-    public WebDriver getDriver() {
+    public RemoteWebDriver getDriver() {
         return driver;
     }
 }

@@ -3,7 +3,7 @@ package praktikum;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class DriverExtension implements BeforeEachCallback, AfterEachCallback {
     private DriverFactory factory = new DriverFactory();
@@ -18,7 +18,7 @@ public class DriverExtension implements BeforeEachCallback, AfterEachCallback {
         factory.initDriver();
     }
 
-    public WebDriver getDriver() {
+    public RemoteWebDriver getDriver() {
         return factory.getDriver();
     }
 
