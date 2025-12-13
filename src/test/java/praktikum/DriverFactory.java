@@ -31,7 +31,7 @@ public class DriverFactory {
 
     public void setupFirefox() {
         WebDriverManager.firefoxdriver().setup();
-        var opts = new FirefoxOptions().setBinary("/usr/bin/firefox");
+        var opts = new FirefoxOptions().configureFromEnv();
 
         driver = new FirefoxDriver(opts);
     }
