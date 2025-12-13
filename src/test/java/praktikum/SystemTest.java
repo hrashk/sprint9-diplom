@@ -51,6 +51,7 @@ public class SystemTest {
     @Test
     public void fetchAuthTokenFromLocalStorage() {
         RemoteWebDriver driver = ext.getDriver();
+        driver.get("https://stellarburgers.education-services.ru/login");
         logIn(driver);
 
         new WebDriverWait(driver, Duration.ofSeconds(10))
@@ -63,8 +64,6 @@ public class SystemTest {
     }
 
     private static void logIn(WebDriver driver) {
-        driver.get("https://stellarburgers.education-services.ru/login");
-
         By loginButton = By.cssSelector("form button");
         new WebDriverWait(driver, Duration.ofSeconds(10))
                 .until(ExpectedConditions.visibilityOfElementLocated(loginButton));
@@ -97,9 +96,7 @@ public class SystemTest {
             }
         });
 
-        driver.findElement(By.cssSelector("input[name='name']")).sendKeys("uasya@pupkin.dev");
-        driver.findElement(By.cssSelector("input[name='Пароль']")).sendKeys("pupkin");
-        driver.findElement(By.cssSelector("form button")).click();
+        logIn(driver);
 
         String authReply = q.poll(10, TimeUnit.SECONDS);
         System.out.println("authReply = " + authReply);
