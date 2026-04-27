@@ -16,8 +16,8 @@ public class SystemTest {
 
     @Test
     public void switchTabs() {
-        WebDriver driver = ext.getDriver();
-        logIn(driver);
+        RemoteWebDriver driver = ext.getDriver();
+        driver.get("https://stellarburgers.education-services.ru");
 
         var ingredientTab = By.cssSelector(".tab_tab__1SPyG:nth-child(3)");
 
