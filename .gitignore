@@ -1,5 +1,6 @@
 target
 *.http
+.allure
 
 ### IntelliJ IDEA ###
 .idea/
