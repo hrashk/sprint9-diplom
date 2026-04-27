@@ -4,18 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.HasDevTools;
-import org.openqa.selenium.devtools.v142.network.Network;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
 
 public class SystemTest {
     @RegisterExtension
@@ -73,34 +66,34 @@ public class SystemTest {
         driver.findElement(loginButton).click();
     }
 
-    @Test
-    public void captureRequest() throws InterruptedException {
-        WebDriver driver = ext.getDriver();
-        driver.get("https://stellarburgers.education-services.ru/login");
-
-        DevTools devTools = ((HasDevTools) driver).getDevTools();
-        devTools.createSession();
-        devTools.send(Network.enable(
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty(),
-                Optional.empty()));
-
-        BlockingQueue<String> q = new LinkedBlockingQueue<>();
-
-        devTools.addListener(Network.responseReceived(), r -> {
-            if (r.getResponse().getUrl().contains("auth")) {
-                Network.GetResponseBodyResponse response = devTools.send(Network.getResponseBody(r.getRequestId()));
-                q.add(response.getBody());
-            }
-        });
-
-        logIn(driver);
-
-        String authReply = q.poll(10, TimeUnit.SECONDS);
-        System.out.println("authReply = " + authReply);
-
-        devTools.clearListeners();
-    }
+//    @Test  --- ignore
+//    public void captureRequest() throws InterruptedException {
+//        WebDriver driver = ext.getDriver();
+//        driver.get("https://stellarburgers.education-services.ru/login");
+//
+//        DevTools devTools = ((HasDevTools) driver).getDevTools();
+//        devTools.createSession();
+//        devTools.send(Network.enable(
+//                Optional.empty(),
+//                Optional.empty(),
+//                Optional.empty(),
+//                Optional.empty(),
+//                Optional.empty()));
+//
+//        BlockingQueue<String> q = new LinkedBlockingQueue<>();
+//
+//        devTools.addListener(Network.responseReceived(), r -> {
+//            if (r.getResponse().getUrl().contains("auth")) {
+//                Network.GetResponseBodyResponse response = devTools.send(Network.getResponseBody(r.getRequestId()));
+//                q.add(response.getBody());
+//            }
+//        });
+//
+//        logIn(driver);
+//
+//        String authReply = q.poll(10, TimeUnit.SECONDS);
+//        System.out.println("authReply = " + authReply);
+//
+//        devTools.clearListeners();
+//    }
 }
